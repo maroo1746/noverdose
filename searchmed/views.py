@@ -6,3 +6,6 @@ def home(request) :
 
 def combine(request) :
     return render(request, 'searchmed/combine.html', {})
+
+def age(request) :
+    return render(request, 'searchmed/age.html', {})

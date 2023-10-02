@@ -1,1 +1,91 @@
-<h1>this is combine page</h1>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>병용금지 의약품 조회</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .search-header{
+            color: #007BFF;
+            font-size: 23px;
+            font-weight: bold;
+            margin-top: 5px;
+            margin-bottom: 25px;
+        }
+        .search-container {
+            background-color: #fff;
+            padding: 30px;
+            padding-bottom: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .input-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            flex: 1;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .search-btn {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .search-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="search-container">
+        <header class ="search-header">
+            Check Drug Compatability
+        </header>
+        <div class="input-group">
+            <input type="text" placeholder="Drug A" id="productA">
+            <button class="search-btn" onclick="checkProduct('productA')">
+                🔍
+            </button>
+        </div>
+        <div class="input-group">
+            <input type="text" placeholder="Drug B" id="productB">
+            <button class="search-btn" onclick="checkProduct('productB')">
+                🔍
+            </button>
+        </div>
+        <div style="text-align: right;">
+            <button class="search-btn" onclick="searchCombined()">Search</button>
+        </div>
+    </div>
+
+    <script>
+        function checkProduct(productID) {
+            // 여기에서 제품명이 실제 존재하는지 체크하는 로직을 추가하실 수 있습니다.
+            console.log(`Checking for product: ${document.getElementById(productID).value}`);
+        }
+
+        function searchCombined() {
+            // 제품명 A와 B가 모두 검증되면 이 함수에서 병용금지 조회를 실행하실 수 있습니다.
+            console.log('Searching for combined products...');
+        }
+    </script>
+</body>
+</html>
