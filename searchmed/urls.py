@@ -4,6 +4,5 @@ app_name = 'searchmed'
 
 urlpatterns = [
 path('', views.home, name='home'),
-
 path('combine/', views.combine, name='combine'),
 ]
