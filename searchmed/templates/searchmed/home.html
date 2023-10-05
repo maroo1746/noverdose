@@ -15,6 +15,17 @@
             height: 100vh;
             background-color: #f4f4f4;
         }
+        h1{
+            color: #007BFF;
+            text-align: center;
+            font-size: 45px;
+        }
+        .logo {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+        }
         .button-group {
             display: flex;
             flex-direction: column;
@@ -37,8 +48,9 @@
 </head>
 <body>
     <div class="button-group">
-        <button onclick="location.href='{% url "searchmed:combine" %}'">병용금기 의약품 조회</button>
-        <button onclick="location.href='{% url "searchmed:age" %}'">연령별 금기 의약품 조회</button>
+        <h1> PILL SMART </h1>
+        <button onclick="location.href='{% url "searchmed:combine" %}'">Contraindications for combined used </button>
+        <button onclick="location.href='{% url "searchmed:age" %}'">Contraindications by age</button>
     </div>
 </body>
 </html>
