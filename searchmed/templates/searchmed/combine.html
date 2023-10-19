@@ -59,33 +59,35 @@
         <header class ="search-header">
             Check Medication Compatability
         </header>
+
+        <form method="POST">
+            {% csrf_token %}
         <div class="input-group">
-            <input type="text" placeholder="Drug A" id="productA">
-            <button class="search-btn" onclick="checkProduct('productA')">
+            <input type="text" placeholder="Drug A" name = "drug_a">
+            <button class="search-btn" onclick="return checkMedicine(this)" type="button">
                 🔍
             </button>
         </div>
         <div class="input-group">
-            <input type="text" placeholder="Drug B" id="productB">
-            <button class="search-btn" onclick="checkProduct('productB')">
+            <input type="text" placeholder="Drug B" name = "drug_b">
+            <button class="search-btn" onclick="return checkMedicine(this)" type="button">
                 🔍
             </button>
         </div>
         <div style="text-align: right;">
             <button class="search-btn" onclick="searchCombined()">Search</button>
         </div>
+        </form>
+
+        {% if is_contraindicated == "True"%}
+        <p style ="color: red">It is contraindicated</p>
+        {% elif is_contraindicated == "False" %} 
+        <p style ="color: green"> It is okay to comsume</p>
+        {%endif%}
     </div>
 
     <script>
-        function checkProduct(productID) {
-            // 여기에서 제품명이 실제 존재하는지 체크하는 로직을 추가하실 수 있습니다.
-            console.log(`Checking for product: ${document.getElementById(productID).value}`);
-        }
-
-        function searchCombined() {
-            // 제품명 A와 B가 모두 검증되면 이 함수에서 병용금지 조회를 실행하실 수 있습니다.
-            console.log('Searching for combined products...');
-        }
+        //need to add script to check if meds exist using JSON.
     </script>
 </body>
 </html>
