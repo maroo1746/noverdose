@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>병용금지 의약품 조회</title>
@@ -51,6 +52,25 @@
         .search-btn:hover {
             background-color: #0056b3;
         }
+        .disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .med-item {
+            padding: 5px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .med-item:hover {
+            background-color: #e6e6e6;
+        }
+        .selected-med {
+            background-color: #c8e6c9;
+        }
+
     </style>
 </head>
 <body>
@@ -61,25 +81,85 @@
         </header>
         <div class="input-group">
             <input type="text" placeholder="Drug A" id="productA">
-            <button class="search-btn" onclick="checkProduct('productA')">
-                🔍
-            </button>
+            <button class="search-btn" onclick="validateMedicine('productA')">🔍</button>
         </div>
+        <div id="medicine-list" style="display:none;"></div>
         <div class="input-group">
             <input type="text" placeholder="Drug B" id="productB">
-            <button class="search-btn" onclick="checkProduct('productB')">
-                🔍
-            </button>
+            <button class="search-btn" onclick="validateMedicine('productB')">🔍</button>
         </div>
         <div style="text-align: right;">
-            <button class="search-btn" onclick="searchCombined()">Search</button>
+            <button class="search-btn disabled" id="combinedSearchBtn" onclick="searchCombined()" disabled>Search</button>
         </div>
     </div>
 
     <script>
-        function checkProduct(productID) {
-            // 여기에서 제품명이 실제 존재하는지 체크하는 로직을 추가하실 수 있습니다.
-            console.log(`Checking for product: ${document.getElementById(productID).value}`);
+        let medA_id = "";
+        let medB_id = "";
+
+        function validateMedicine(productId) {
+            // 이 함수는 med_db.med에서 의약품 유무를 체크한다
+            let inputVal = document.getElementById(productId).value;
+            
+            // AJAX 요청을 통해 의약품을 검증한다
+            
+            $.ajax({
+                url: '/check_medicine/', // Django URL endpoint
+                method: 'GET',
+                data: {
+                    'product_name' : inputVal
+                },
+                success: function(data) {
+                    console.log(data);
+
+                    if (data.medicines && data.medicines.length > 0) {
+                        displayMedicines(data.medicines, productId);
+                    }
+                },
+                error: function(err) {
+                    console.error("Error fetchig medicines", err);
+                }
+            });
+
+            /*
+            if (validA && validB) {
+                document.getElementById('combinedSearchBtn').classList.remove('disabled');
+                document.getElementById('combinedSearchBtn').disabled = false;
+            } else {
+                document.getElementById('combinedSearchBtn').classList.add('disabled');
+                document.getElementById('combinedSearchBtn').disabled = true;
+            }
+            */
+        }
+
+        function displayMedicines(medicines, productId) {
+            let medicineListDiv = document.getElementById("medicine-list");
+            medicineListDiv.innerHTML = ""; // Clear previous list
+            medicines.forEach(med => {
+                let medItem = document.createElement("div");
+                medItem.className = "med-item";
+                medItem.innerText = `${med.product_name} (${med.compound_name}, ${med.compound_code}, ${med.product_code}, ${med.company_name})`;
+                medItem.onclick = function() {
+                    if (productId === 'productA') {
+                        medA_id = med.id;
+                    } else if (productId === 'productB') {
+                        medB_id = med.id;
+                    }
+
+                    // 사용자의 입력 상자에 선택한 의약품 이름을 설정합니다
+                    document.getElementById(productId).value = med.product_name;
+                    
+                    // 목록을 숨깁니다
+                    medicineListDiv.style.display = "none";
+
+                    if (medA_id && medB_id) {
+                        document.getElementById('combinedSearchBtn').classList.remove('disabled');
+                        document.getElementById('combinedSearchBtn').disabled = false;
+                    }
+                };
+                medicineListDiv.appendChild(medItem);
+            });
+            medicineListDiv.style.display = "block";  // Show the list
         }
 
         function searchCombined() {
