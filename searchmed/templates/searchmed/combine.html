@@ -26,6 +26,7 @@
         <div style="text-align: right;">
             <button class="search-btn disabled" id="combinedSearchBtn" onclick="searchCombined()" disabled>Search</button>
         </div>
+        <div id="resultsContainer"></div>
     </div>
 
     <script>
@@ -122,7 +123,38 @@
 
         function searchCombined() {
             // 제품명 A와 B가 모두 검증되면 이 함수에서 병용금지 조회를 실행하실 수 있습니다.
-            console.log('Searching for combined products...');
+            $.ajax({
+                url: '/check_contraindication/',
+                method: 'GET',
+                data: {
+                    'medA_id' : medA_id,
+                    'medB_id' : medB_id
+                },
+                success: function(data) {
+                    if (data && data.length > 0) {
+                        var tableHTML = '<table id="resultTable">';
+                        tableHTML += '<thead><tr><th>상세정보</th><th>고시번호</th><th>고시일자</th><th>비고</th></tr></thead>';
+                        tableHTML += '<tbody>';
+                        for (var i = 0; i < data.length; i++) {
+                            tableHTML += '<tr>';
+                            tableHTML += '<td>' + data[i].contraindicated_info + '</td>';
+                            tableHTML += '<td>' + data[i].notification_no + '</td>';
+                            tableHTML += '<td>' + data[i].notification_date + '</td>';
+                            tableHTML += '<td>' + data[i].detail_info + '</td>';
+                            tableHTML += '</tr>';
+                        }
+                        tableHTML += '</tbody>';
+                        tableHTML += '</table>';
+
+                        document.getElementById('resultsContainer').innerHTML = tableHTML; 
+                    } else {
+                        document.getElementById('resultsContainer').innerHTML = '병용금지 약품 조합이 아닙니다.';
+                    }
+                },
+                error: function(err) {
+                    console.error("Error fetching contraindication info", err);
+                }
+            });
         }
     </script>
 </body>

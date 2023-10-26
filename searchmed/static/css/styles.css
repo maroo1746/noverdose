@@ -33,7 +33,7 @@
         
         input[type="text"] {
             padding: 10px !important;
-            flex: 2 !important;           
+            flex: 3 !important;           
             margin-right: 10px !important;
             border: 1px solid #ccc !important;
             border-radius: 4px !important;
@@ -87,5 +87,19 @@
         #medicine-list {
             max-height: 300px; 
             overflow-y: auto;
+        }
+        #resultTable {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        #resultTable th, #resultTable td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        #resultTable th {
+            background-color: #f2f2f2;
         }
 </style>
