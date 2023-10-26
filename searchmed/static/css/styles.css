@@ -1,0 +1,91 @@
+<style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .search-header{
+            color: #007BFF;
+            font-size: 23px;
+            font-weight: bold;
+            margin-top: 5px;
+            margin-bottom: 25px;
+        }
+        .search-container {
+            background-color: #fff;
+            padding: 30px;
+            padding-bottom: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 1200px;  /* 최대 너비 설정 */
+            box-sizing: border-box;
+        }
+        .input-group {
+            display: flex !important;
+            align-items: center !important;
+            margin-bottom: 15px !important;
+            width: 100% !important;        
+        }
+        
+        input[type="text"] {
+            padding: 10px !important;
+            flex: 2 !important;           
+            margin-right: 10px !important;
+            border: 1px solid #ccc !important;
+            border-radius: 4px !important;
+        }
+        .search-btn {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .search-btn:hover {
+            background-color: #0056b3;
+        }
+        .disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .med-item {
+            padding: 5px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .med-item:hover {
+            background-color: #e6e6e6;
+        }
+        .selected-med {
+            background-color: #c8e6c9;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        #medicine-list {
+            max-height: 300px; 
+            overflow-y: auto;
+        }
+</style>
