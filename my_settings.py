@@ -1,10 +1,12 @@
+import os
+
 DATABASES = {
     'default' : {
         'ENGINE' : 'django.db.backends.mysql',
         'NAME' : 'med_db',
         'USER' : 'root',
         'PASSWORD' : 'snewi832#',
-        'HOST' : 'localhost',
+        'HOST': os.getenv('DB_HOST', 'localhost'),
         'PORT' : '3306',
     }
 }
