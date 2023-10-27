@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: med_db
+      MYSQL_ROOT_PASSWORD: snewi832#
+    ports:
+      - "3306:3306"
+    restart: always
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - SECRET_KEY=django-insecure-!q7#u-1tucuqadzf7(z6i&ql#qam$=2x(b4p6%3m2fv%j6&cvq
+      - DATABASE_NAME=med_db
+      - DATABASE_USER=root
+      - DATABASE_PASSWORD=snewi832#
+      - DATABASE_HOST=db
+      - DATABASE_PORT=3306
+      - DB_HOST=db
+  
+  migrate:
+    build: .
+    command: python manage.py migrate
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+
+  volumes:
+    mysql_data:
