@@ -9,6 +9,9 @@ DATABASES = {
         #'HOST': os.getenv('DB_HOST', 'localhost'),
         'HOST' : 'db',
         'PORT' : '3306',
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+        },
     }
 }
 

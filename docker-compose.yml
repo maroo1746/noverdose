@@ -10,7 +10,7 @@ services:
       MYSQL_DATABASE: med_db
       MYSQL_ROOT_PASSWORD: snewi832#
     ports:
-      - 3306:3306
+      - 3307:3306
     restart: always
     networks:
       - django-network
@@ -35,8 +35,9 @@ services:
     networks:
       - django-network
   
-  volumes:
-    mysql_data:
+volumes:
+  mysql_data:
 
-  networks:
+networks:
     django-network:
+      driver: bridge
