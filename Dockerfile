@@ -15,5 +15,14 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the project file
 COPY . /app/
 
-# Run the server
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Copy wait-for-it.sh into the container
+COPY wait-for-it.sh /app/wait-for-it.sh
+
+# 백업 파일 추가
+COPY ./backup.sql /docker-entrypoint-initdb.d/
+
+# Make sure wait-for-it.sh is executable
+RUN chmod +x /app/wait-for-it.sh
+
+# Run the server (now using wait-for-it.sh)
+CMD ["./wait-for-it.sh", "db:3306", "--", "python", "manage.py", "runserver", "0.0.0.0:8000"]

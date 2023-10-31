@@ -5,12 +5,15 @@ services:
     image: mysql:8.0
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./backup.sql:/docker-entrypoint-initdb.d/backup.sql
     environment:
       MYSQL_DATABASE: med_db
       MYSQL_ROOT_PASSWORD: snewi832#
     ports:
-      - "3306:3306"
+      - 3306:3306
     restart: always
+    networks:
+      - django-network
 
   web:
     build: .
@@ -18,7 +21,7 @@ services:
     volumes:
       - .:/app
     ports:
-      - "8000:8000"
+      - 8000:8000
     depends_on:
       - db
     environment:
@@ -29,14 +32,11 @@ services:
       - DATABASE_HOST=db
       - DATABASE_PORT=3306
       - DB_HOST=db
+    networks:
+      - django-network
   
-  migrate:
-    build: .
-    command: python manage.py migrate
-    volumes:
-      - .:/app
-    depends_on:
-      - db
-
   volumes:
     mysql_data:
+
+  networks:
+    django-network:
