@@ -17,6 +17,7 @@ services:
 
   web:
     build: .
+    image: mediforbidden_web
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
@@ -29,7 +30,7 @@ services:
       - DATABASE_NAME=med_db
       - DATABASE_USER=root
       - DATABASE_PASSWORD=snewi832#
-      - DATABASE_HOST=db
+      #- DATABASE_HOST=db
       - DATABASE_PORT=3306
       - DB_HOST=db
     networks:
