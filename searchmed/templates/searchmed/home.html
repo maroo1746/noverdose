@@ -51,6 +51,8 @@
         <h1> PILL SMART </h1>
         <button onclick="location.href='{% url "searchmed:combine" %}'">Contraindications for combined used </button>
         <button onclick="location.href='{% url "searchmed:age" %}'">Contraindications by age</button>
+        <!-- 새로운 로그인 버튼 추가 -->
+        <a href="{% url 'login' %}"><button>Login for admin and add info</button></a>
     </div>
 </body>
 </html>

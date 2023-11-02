@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from .models import Med, Medcontraindication
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def home_view(request) :
@@ -33,3 +34,9 @@ def check_contraindication(request):
         })
 
     return JsonResponse(data, safe=False)
+
+@login_required
+def addinfo_view(request):
+    return render(request, 'searchmed/addinfo.html')
+
+
