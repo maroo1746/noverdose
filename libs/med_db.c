@@ -24,6 +24,9 @@ void insert_into_med_db(const char* product_name, const char* compound_name, con
         return;
     }
 
+    printf(product_name); 
+    printf(" inserted into med table successfully\n");
+
     mysql_close(con);
 
 }
