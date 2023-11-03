@@ -27,7 +27,7 @@ services:
     depends_on:
       - db
     environment:
-      - SECRET_KEY=django-insecure-!q7#u-1tucuqadzf7(z6i&ql#qam$=2x(b4p6%3m2fv%j6&cvq
+      - SECRET_KEY=${SECRET_KEY}
       - DATABASE_NAME=med_db
       - DATABASE_USER=root
       - DATABASE_PASSWORD=snewi832#

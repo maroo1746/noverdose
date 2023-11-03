@@ -1,7 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from .models import Med, Medcontraindication
 from django.contrib.auth.decorators import login_required
+import ctypes
+
+# Load the shared library
+med_db_lib = ctypes.CDLL('./libs/med_db.so')
 
 # Create your views here.
 def home_view(request) :
@@ -37,6 +42,25 @@ def check_contraindication(request):
 
 @login_required
 def addinfo_view(request):
-    return render(request, 'searchmed/addinfo.html')
+
+    if not request.user.is_superuser:
+        return HttpResponseForbidden("You don't have permission to access this page.")
+
+    if request.method == 'GET':
+        return render(request, 'searchmed/addinfo.html')
+
+    elif request.method == 'POST':
+        product_name = request.POST.get('product_name')
+        compound_name = request.POST.get('compound_name')
+        compound_code = request.POST.get('compound_code')
+        product_code = request.POST.get('product_code')
+        company_name = request.POST.get('company_name')
+
+        med_db_lib.insert_into_med_db(product_name.encode('utf-8'), compound_name.encode('utf-8'), compound_code.encode('utf-8'), product_code.encode('utf-8'), company_name.encode('utf-8'))
+
+        return redirect('searchmed:addinfo')
+    
+    else:
+        return HttpResponse("Unsupported HTTP method.")
 
 
