@@ -18,6 +18,13 @@ void insert_into_med_db(const char* product_name, const char* compound_name, con
     char query[500];
     sprintf(query, "INSERT INTO med(product_name, compound_name, compound_code, product_code, company_name) VALUES('%s', '%s', '%s', '%s', '%s')", product_name, compound_name, compound_code, product_code, company_name);
 
+    if (mysql_query(con, query)) {
+        fprintf(stderr, "%s\n", mysql_error(con));
+        mysql_close(con);
+        return;
+    }
+
+    mysql_close(con);
 
 }
 
