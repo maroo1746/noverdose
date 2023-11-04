@@ -15,6 +15,15 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the project file
 COPY . /app/
 
+# Copy getlog.c into the container
+COPY getlog.c /app/
+
+# Compile getlog.c
+RUN gcc -o getlog getlog.c
+
+# Make getlog executable
+RUN chmod +x getlog
+
 # Copy wait-for-it.sh into the container
 COPY wait-for-it.sh /app/wait-for-it.sh
 
@@ -25,4 +34,4 @@ COPY ./backup.sql /docker-entrypoint-initdb.d/
 RUN chmod +x /app/wait-for-it.sh
 
 # Run the server (now using wait-for-it.sh)
-CMD ["./wait-for-it.sh", "db:3306", "--", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["./getlog", "./wait-for-it.sh", "db:3306", "--", "python", "manage.py", "runserver", "0.0.0.0:8000"]

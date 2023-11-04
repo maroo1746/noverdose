@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Searched drugs log</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="search-container">
+        <header class ="search-header">
+            View Searched Drugs Log
+        </header>
+
+        <form method="POST" id="logForm">
+            {% csrf_token %}
+        <div class="input-group">
+            <input type="text" placeholder="type the log's id" id="logId">
+            <button class="search-btn" type="button" onclick="getLog()">🔍</button>
+        </div>
+        <div id="logResult"></div>
+    </div>
+        
+    <script>
+        function getLog() {
+            var logId = document.getElementById('logId').value;
+            var formData = new FormData();
+            formData.append('log_id', logId);
+
+            fetch('/display_log/', {
+                method: 'POST',
+                body: formData,
+                // {% csrf_token %}
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('logResult').innerText = data;
+            });
+        }
+    </script>
+</body>

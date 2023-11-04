@@ -1,0 +1,7 @@
+display this
+this is new line
+line 3
+line 4
+
+한글도 괜찮지?
+yup, 출력할수있음

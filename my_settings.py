@@ -6,7 +6,6 @@ DATABASES = {
         'NAME' : 'med_db',
         'USER' : 'root',
         'PASSWORD' : 'snewi832#',
-        #'HOST': os.getenv('DB_HOST', 'localhost'),
         'HOST' : 'db',
         'PORT' : '3306',
         'OPTIONS': {

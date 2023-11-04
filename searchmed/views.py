@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from .models import Med, Medcontraindication
+from django.views.decorators.csrf import csrf_exempt
+import subprocess
 
 # Create your views here.
 def home_view(request) :
@@ -11,6 +13,9 @@ def combine_view(request) :
 
 def age_view(request) :
     return render(request, 'searchmed/age.html', {})
+
+def log_view(request) :
+    return render(request, 'searchmed/log.html', {})
 
 def check_medicine(request):
     product_name = request.GET.get('product_name')
@@ -33,3 +38,16 @@ def check_contraindication(request):
         })
 
     return JsonResponse(data, safe=False)
+
+@csrf_exempt # disable CSRF protection for this specific view
+def display_log(request):
+    if request.method == 'POST':
+        log_id = request.POST.get('log_id', '')
+        if log_id:
+            try:
+                result = subprocess.check_output(['./getlog'], input=log_id, text=True)
+                return JsonResponse({'log_result': result}, safe=False)
+            except subprocess.CalledProcessError as e:
+                return JsonResponse({'error': str(e)}, safe=False)
+
+    return render(request, 'log.html')
