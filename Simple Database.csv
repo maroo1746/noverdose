@@ -1,0 +1,24 @@
+Chemical Name A ,Product Name A,Chemical ID A,Product ID A,Chemical Name B,Product Name B,Chemical ID B,Product ID B,Age Restriction A,Age Restriction Type A,Age Direction A
+acamprosate,Acetaminophen 3mg,122000,#D123ADS,acarbose,Levothyroxine 10mg,902311,#K900192,12,Month,Higher
+acamprosate,Acetaminophen 3mg,122000,#D123ADS,albendazol,Warfarin 1200mg,224920,#C154POS,12,Month,Higher
+acamprosate,Acetaminophen 3mg,122000,#D123ADS,bicalutamide,Citalopram 0.3g,490023,#T098KLL,12,Month,Higher
+acamprosate,Acetaminophen 3mg,122000,#D123ADS,ciprofloxacin,Hydrochlorothiazide 90mg,16700,#L920OMG,12,Month,Higher
+acarbose,Levothyroxine 10mg,902311,#K900192,acamprosate,Acetaminophen 3mg,122000,#D123ADS,40,Month,Lower
+albendazol,Warfarin 1200mg,224920,#C154POS,acamprosate,Acetaminophen 3mg,122000,#D123ADS,10,Year,Higher
+albendazol,Warfarin 1200mg,224920,#C154POS,L-carbocysteine,Omeprazole 1.9mg,902043,#Y320GDS,10,Year,Higher
+bicalutamide,Citalopram 0.3g,490023,#T098KLL,acamprosate,Acetaminophen 3mg,122000,#D123ADS,3,Year,Lower
+bicalutamide,Citalopram 0.3g,490023,#T098KLL,L-carbocysteine,Omeprazole 1.9mg,902043,#Y320GDS,3,Year,Lower
+bicalutamide,Citalopram 0.3g,490023,#T098KLL,ciprofloxacin,Hydrochlorothiazide 90mg,16700,#L920OMG,3,Year,Lower
+ciprofloxacin,Hydrochlorothiazide 90mg,16700,#L920OMG,acamprosate,Acetaminophen 3mg,122000,#D123ADS,7,Month,Higher
+ciprofloxacin,Hydrochlorothiazide 90mg,16700,#L920OMG,bicalutamide,Citalopram 0.3g,490023,#T098KLL,7,Month,Higher
+ciprofloxacin,Hydrochlorothiazide 90mg,16700,#L920OMG,L-carbocysteine,Omeprazole 1.9mg,902043,#Y320GDS,7,Month,Higher
+L-carbocysteine,Omeprazole 1.9mg,902043,#Y320GDS,albendazol,Warfarin 1200mg,224920,#C154POS,-,-,-
+L-carbocysteine,Omeprazole 1.9mg,902043,#Y320GDS,bicalutamide,Citalopram 0.3g,490023,#T098KLL,-,-,-
+L-carbocysteine,Omeprazole 1.9mg,902043,#Y320GDS,ciprofloxacin,Hydrochlorothiazide 90mg,16700,#L920OMG,-,-,-
+L-carbocysteine,Omeprazole 1.9mg,902043,#Y320GDS,clobetasol propionate,Oxitocine 12mg,902015,#P890DSG,-,-,-
+milk thistle fruit ext.,Gabapentin,120802,#J120LSD,-,-,-,-,5,Month,Higher
+clobetasol propionate,Oxitocine 12mg,902015,#P890DSG,L-carbocysteine,Omeprazole 1.9mg,902043,#Y320GDS,13,Year,Lower
+diazepam,Ibuprofen,112312,#CD1231G,-,-,-,-,12,Year,Lower
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,, ,,,,,

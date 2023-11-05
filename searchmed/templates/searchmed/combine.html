@@ -37,7 +37,7 @@
         let medB_id = "";
 
         function validateMedicine(productId) {
-            // 이 함수는 med_db.med에서 의약품 유무를 체크한다
+            // checks if the medicine exists in med_db.med
             let inputVal = document.getElementById(productId).value;
             
             // AJAX 요청을 통해 의약품을 검증한다
@@ -103,7 +103,6 @@
                         medA_id = med.id;
 
                     } else if (productId === 'productB') {
-                        // 추후에 medB_id 로직 추가
                         medB_id = med.id;
                     }
 
@@ -136,7 +135,7 @@
                 success: function(data) {
                     if (data && data.length > 0) {
                         var tableHTML = '<table id="resultTable">';
-                        tableHTML += '<thead><tr><th>상세정보</th><th>고시번호</th><th>고시일자</th><th>비고</th></tr></thead>';
+                        tableHTML += '<thead><tr><th>상세정보 (contraindicated_info)</th><th>고시번호 (notification_no)</th><th>고시일자 (notification_date)</th><th>비고 (detail_info)</th></tr></thead>';
                         tableHTML += '<tbody>';
                         for (var i = 0; i < data.length; i++) {
                             tableHTML += '<tr>';
@@ -151,7 +150,7 @@
 
                         document.getElementById('resultsContainer').innerHTML = tableHTML; 
                     } else {
-                        document.getElementById('resultsContainer').innerHTML = '병용금지 약품 조합이 아닙니다.';
+                        document.getElementById('resultsContainer').innerHTML = '병용금지 약품 조합이 아닙니다. (This is not a combination for contraindicated medicines)';
                     }
                 },
                 error: function(err) {
