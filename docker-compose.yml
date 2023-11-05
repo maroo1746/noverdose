@@ -17,7 +17,7 @@ services:
 
   web:
     build: .
-    image: mediforbidden_web
+    image: mediforbidden_web:latest
     #command: python manage.py runserver 0.0.0.0:8000
     command: ["./wait-for-it.sh", "db:3306", "--", "python", "manage.py", "runserver", "0.0.0.0:8000"]
     volumes:
