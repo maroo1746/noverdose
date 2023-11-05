@@ -48,8 +48,8 @@ void insert_into_med_db(const char* product_name, const char* compound_name, con
         return;
     }
 
-    printf(stderr, product_name); 
-    printf(stderr, " inserted into med table successfully\n");
+    fprintf(stderr, product_name); 
+    fprintf(stderr, " inserted into med table successfully\n");
 
     char log_message[600];
     sprintf(log_message, "Inserted: %s, %s, %s, %s, %s", product_name, compound_name, compound_code, product_code, company_name);
