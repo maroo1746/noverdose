@@ -14,14 +14,16 @@ RUN apt-get update && apt-get install -y \
 # Set the working directory
 WORKDIR /app
 
+# Install git
+RUN apk add --no-cache git
+
+RUN git clone https://github.com/maroo1746/noverdose.git .
+
 # C 파일 및 관련 작업을 위한 디렉토리 설정
 # WORKDIR /app/libs
 
 # Copy the project file
 COPY . /app/
-
-# C 파일을 Docker 컨테이너 내부로 복사
-# COPY med_db.c .
 
 # C 코드를 shared library로 컴파일
 RUN gcc -shared -o /app/libs/med_db.so -fPIC /app/libs/med_db.c -lmysqlclient
@@ -31,11 +33,8 @@ RUN gcc -shared -o /app/libs/med_db.so -fPIC /app/libs/med_db.c -lmysqlclient
 
 # Install the Python package requirements
 # you should have requirments.txt file in Project's root
-# COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy wait-for-it.sh into the container
-# COPY wait-for-it.sh /app/wait-for-it.sh
 
 # 백업 파일 추가
 COPY ./backup.sql /docker-entrypoint-initdb.d/

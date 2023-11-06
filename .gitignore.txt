@@ -21,7 +21,9 @@ media
 *$py.class
 
 # C extensions
-*.so
+# *.so
+
+log.txt
 
 # Distribution / packaging
 .Python
