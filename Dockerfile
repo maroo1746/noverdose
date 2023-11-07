@@ -5,19 +5,20 @@ FROM python:3.9.18
 ENV PYTHONUNBUFFERED 1
 
 # Install the package
-RUN apt-get update && apt-get install -y \
-    python3-pip \
-    gcc \
-    libmysqlclient-dev \
-    mysql-client && apt-get clean
+
+#RUN apt-get update && apt-get install -y \
+#    python3-pip \
+#    gcc \
+#    libmysqlclient-dev \
+#    mysql-client && apt-get clean
 
 # Set the working directory
 WORKDIR /app
 
 # Install git
-RUN apk add --no-cache git
+# RUN apk add --no-cache git
 
-RUN git clone https://github.com/maroo1746/noverdose.git .
+# RUN git clone https://github.com/maroo1746/noverdose.git .
 
 # C 파일 및 관련 작업을 위한 디렉토리 설정
 # WORKDIR /app/libs
@@ -26,7 +27,7 @@ RUN git clone https://github.com/maroo1746/noverdose.git .
 COPY . /app/
 
 # C 코드를 shared library로 컴파일
-RUN gcc -shared -o /app/libs/med_db.so -fPIC /app/libs/med_db.c -lmysqlclient
+# RUN gcc -shared -o /app/libs/med_db.so -fPIC /app/libs/med_db.c -lmysqlclient
 
 # Go back to main app directory
 # WORKDIR /app
