@@ -5,14 +5,14 @@
 #include <mysql/mysql.h>
 
 void write_to_log(const char* message) {
-
+    /*
     char cwd[1024];
     if (getcwd(cwd, sizeof(cwd)) != NULL) {
         fprintf(stderr, "Current working dir: %s\n", cwd);
     } else {
         perror("getcwd() error");
     }
-
+    */
     const char* log_file = "log.txt";
     FILE* fp = fopen(log_file, "a");
 
