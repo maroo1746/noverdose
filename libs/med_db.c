@@ -2,27 +2,31 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <mysql/mysql.h>
 
-void write_to_log(const char* message) {
-    /*
-    char cwd[1024];
-    if (getcwd(cwd, sizeof(cwd)) != NULL) {
-        fprintf(stderr, "Current working dir: %s\n", cwd);
-    } else {
-        perror("getcwd() error");
-    }
-    */
-    const char* log_file = "log.txt";
-    FILE* fp = fopen(log_file, "a");
+#define LOG_FILE "log.txt"
+#define LOG_FILE_MODE S_IRUSR | S_IWUSR
 
+void write_to_log(const char* message) {
+    int fd = open(LOG_FILE, O_WRONLY | O_CREAT | O_APPEND, LOG_FILE_MODE);
+    if (fd == -1) {
+        perror("Failed to open log file");
+        return;
+    }
+
+    // fd를 FILE*로 변환합니다.
+    FILE* fp = fdopen(fd, "a");
     if (!fp) {
-        fprintf(stderr, "Failed to open log file\n");
+        perror("Failed to convert file descriptor to file pointer");
+        close(fd);
         return;
     }
 
     fprintf(fp, "%s\n", message);
-    fclose(fp);
+    fclose(fp); // fclose는 내부적으로 fd도 닫습니다.
 }
 
 void insert_into_med_db(const char* product_name, const char* compound_name, const char* compound_code, const char* product_code, const char* company_name) {
@@ -52,7 +56,7 @@ void insert_into_med_db(const char* product_name, const char* compound_name, con
     fprintf(stderr, " inserted into med table successfully\n");
 
     char log_message[600];
-    sprintf(log_message, "Inserted: %s, %s, %s, %s, %s", product_name, compound_name, compound_code, product_code, company_name);
+    snprintf(log_message, sizeof(log_message), "Inserted: %s, %s, %s, %s, %s", product_name, compound_name, compound_code, product_code, company_name);
     write_to_log(log_message); 
 
     mysql_close(con);
