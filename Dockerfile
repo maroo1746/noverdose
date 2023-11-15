@@ -36,7 +36,6 @@ COPY . /app/
 # you should have requirments.txt file in Project's root
 RUN pip install --no-cache-dir -r requirements.txt
 
-
 # 백업 파일 추가
 COPY ./backup.sql /docker-entrypoint-initdb.d/
 
@@ -44,8 +43,8 @@ COPY ./backup.sql /docker-entrypoint-initdb.d/
 RUN chmod +x ./wait-for-it.sh
 
 # COPY entrypoint.sh /app/
-RUN chmod +x ./entrypoint.sh
-ENTRYPOINT ["./entrypoint.sh"]
+# RUN chmod +x ./entrypoint.sh
+# ENTRYPOINT ["./entrypoint.sh"]
 
 # Run the server (now using wait-for-it.sh)
-CMD ["./wait-for-it.sh", "db:3306", "--", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["./wait-for-it.sh", "db:3306", "--", "python", "manage.py", "runsslserver", "0.0.0.0:8000"]
