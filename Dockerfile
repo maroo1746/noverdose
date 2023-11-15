@@ -47,4 +47,8 @@ RUN chmod +x ./wait-for-it.sh
 # ENTRYPOINT ["./entrypoint.sh"]
 
 # Run the server (now using wait-for-it.sh)
+<<<<<<< HEAD
 CMD ["./wait-for-it.sh", "db:3306", "--", "python", "manage.py", "runsslserver", "0.0.0.0:8000"]
+=======
+CMD ["./wait-for-it.sh", "db:3306", "--", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+>>>>>>> efc0e1f0bf5b9bb878108a53f06e7b4c03661495
