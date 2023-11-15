@@ -18,7 +18,7 @@ WORKDIR /app
 # Install git
 # RUN apk add --no-cache git
 
-RUN git clone https://github.com/maroo1746/noverdose.git .
+# RUN git clone https://github.com/maroo1746/noverdose.git .
 
 # C 파일 및 관련 작업을 위한 디렉토리 설정
 # WORKDIR /app/libs
