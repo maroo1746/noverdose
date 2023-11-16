@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.http import HttpResponse, HttpResponseForbidden
 from .models import Med, Medcontraindication
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 import ctypes
 
 # Load the shared library
@@ -20,14 +21,22 @@ def age_view(request) :
 
 def check_medicine(request):
     product_name = request.GET.get('product_name')
-    medicines = Med.objects.filter(product_name__icontains=product_name)  # 수정된 부분
+    if product_name:
+        medicines = Med.objects.filter(product_name__icontains=product_name)
+    else:
+        medicines = Med.objects.none()
     medicines_list = medicines.values('id', 'product_name', 'compound_name', 'compound_code', 'product_code', 'company_name')
-    return JsonResponse({'medicines': list(medicines_list)}) #이 코드는 medicines라는 키로 의약품 리스트를 JSON 형태로 반환하게 됩니다. 따라서 프론트엔드에서 이 데이터를 받을 때, data.medicines로 접근하면 해당 의약품 리스트를 가져올 수 있습니다.
+    return JsonResponse({'medicines': list(medicines_list)})
 
 def check_contraindication(request):
     medA_id = request.GET.get('medA_id')
     medB_id = request.GET.get('medB_id')
-    results = Medcontraindication.objects.filter(med_id_a__in=[medA_id, medB_id], med_id_b__in=[medA_id, medB_id])
+    if medA_id and medB_id:
+        results = Medcontraindication.objects.filter(
+            Q(med_id_a=medA_id, med_id_b=medB_id) | Q(med_id_a=medB_id, med_id_b=medA_id)
+        )
+    else:
+        results = Medcontraindication.objects.none()
     
     data = []
     for r in results:
