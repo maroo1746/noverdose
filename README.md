@@ -5,10 +5,39 @@
 Our project consists of two main functionalities:
 
 ### User Side:
-- Users are able to search for contraindicated drugs.
+- Users are able to search for contraindicated drugs. You can test the function by given example in "https://127.0.0.1/combine/" page
+
+1st example
+```
+1st Med's name : 에이서캡슐 , 2nd Med's name : 케토라신정 
+```
+webpage will pop-up the contraindicated_info, notification_no, notificiation_date, detail_info of this combination
+
+2st example
+```
+1st Med's name : 에이서캡슐 , 2nd Med's name : 바이오(you can choose any drugs that contains "바이오" as its product_name)
+```
+webpage will pop-up the message that says " This is not a combination for contraindicated medicines " 
+
+*Also, you don't have to care about "Contraindications by age" button. We haven't developed yet.*
 
 ### Admin Side:
 - Verified administrators have the ability to add drug information into the database (we named this table `med`, which is part of the `med_db`).
+
+- If you want to check the med_db, you can do it by going inside the db container
+```
+docker exec -it [db container's ID or name] /bin/bash
+```
+
+```
+mysql -u root -p
+```
+
+our mysql passwd is : snewi832#
+
+```
+USE med_db;
+```
 
 ## Setup Process
 
