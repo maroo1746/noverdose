@@ -7,8 +7,12 @@ services:
       - mysql_data:/var/lib/mysql
       - ./backup.sql:/docker-entrypoint-initdb.d/backup.sql
     environment:
-      MYSQL_DATABASE: med_db
-      MYSQL_ROOT_PASSWORD: snewi832#
+      - MYSQL_DATABASE=med_db
+      - MYSQL_ROOT_PASSWORD=snewi832#
+      - DB_PASSWORD=${DB_PASSWORD}
+      
+    env_file:
+      - .env
     ports:
       - 3307:3306
     restart: always

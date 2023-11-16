@@ -37,7 +37,15 @@ void insert_into_med_db(const char* product_name, const char* compound_name, con
         return;
     } 
 
-    if(mysql_real_connect(con, "db", "root", "snewi832#", "med_db", 3306, NULL, 0) == NULL) {
+    const char *db_password = getenv("DB_PASSWORD");
+
+    if (db_password == NULL) {
+        fprintf(stderr, "DB_PASSWORD environment variable is not set\n");
+        mysql_close(con);
+        return;
+    }
+
+    if (mysql_real_connect(con, "db", "root", db_password, "med_db", 3306, NULL, 0) == NULL) {
         fprintf(stderr, "%s\n", mysql_error(con));
         mysql_close(con);
         return;
