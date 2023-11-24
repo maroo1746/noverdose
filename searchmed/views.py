@@ -49,6 +49,7 @@ def check_contraindication(request):
 
     return JsonResponse(data, safe=False)
 
+
 @login_required
 def addinfo_view(request):
 

@@ -8,8 +8,7 @@ services:
       - ./backup.sql:/docker-entrypoint-initdb.d/backup.sql
     environment:
       - MYSQL_DATABASE=med_db
-      - MYSQL_ROOT_PASSWORD=snewi832#
-      - DB_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
       
     env_file:
       - .env
@@ -30,11 +29,13 @@ services:
       - 8000:8000
     depends_on:
       - db
+    env_file:
+      - .env
     environment:
       - SECRET_KEY=${SECRET_KEY}
       - DATABASE_NAME=med_db
       - DATABASE_USER=root
-      - DATABASE_PASSWORD=snewi832#
+      - DATABASE_PASSWORD=${DB_PASSWORD}
       - DATABASE_PORT=3306
       - DB_HOST=db
     networks:
