@@ -1,14 +1,81 @@
-<!-- user_med.html -->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Register Your Medication</title>
+    <title>Your Medicines</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .med-table {
+            width: 66%; /* 테이블 크기를 페이지의 2/3로 설정 */
+            overflow-y: auto; /* 스크롤 가능하게 설정 */
+            max-height: 400px; /* 스크롤 영역의 최대 높이 */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            margin-bottom: 10px;
+            width: 150px;  /* 버튼의 너비 */
+            height: 50px;  /* 버튼의 높이 */
+            font-size: 100px;  /* 폰트 크기 */
+            padding: 10px; 
+        }
+        .button-group button {
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
 
-<h1>Register Your Medication</h1>
+<h1>Your Medicines</h1>
 
-<!-- 폼이나 내용 추가 -->
+<div class="container">
+    <div class="med-table">
+        <!-- 약품 목록 테이블 -->
+        <table>
+            <thead>
+                <tr>
+                    <th>product name</th>
+                    <th>compound name</th>
+                    <th>compound code</th>
+                    <th>product code</th>
+                    <th>company name</th>
+                    <!-- 다른 컬럼 추가 가능 -->
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 서버에서 가져온 약품 데이터를 반복하여 표시 -->
+                <!-- 예시:
+                <tr>
+                    <td>Aspirin</td>
+                    <td>100mg</td>
+                    <td>Once a day</td>
+                </tr>
+                -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="button-group">
+        <!-- 버튼 추가 -->
+        <button onclick="addMed()">Add Med</button>
+        <button onclick="searchMed()">Search</button>
+    </div>
+</div>
 
 </body>
 </html>

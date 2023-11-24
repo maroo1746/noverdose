@@ -20,6 +20,9 @@ def home_view(request) :
 def combine_view(request) :
     return render(request, 'searchmed/combine.html', {})
 
+def add_med_user_view(request) :
+    return render(request, 'searchmed/add_med_user.html', {})
+
 def age_view(request) :
     return render(request, 'searchmed/age.html', {})
 

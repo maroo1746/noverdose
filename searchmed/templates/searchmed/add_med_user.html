@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>병용금지 의약품 조회</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    
+    <div class="search-container">
+        <header class ="search-header">
+            Add Medications
+        </header>
+
+        <form method="POST">
+            {% csrf_token %}
+        <div class="input-group">
+            <input type="text" placeholder="Medication Name" id="productA">
+            <button class="search-btn" type="button" onclick="validateMedicine('productA')">🔍</button>
+        </div>
+        <div id="medicine-list" style="display:none;"></div>
+        <div style="text-align: right;">
+            <button class="search-btn disabled" type="button" id="addMedicineBtn" onclick="addMedicine()" disabled>Add</button>
+        </div>
+        <div id="resultsContainer"></div>
+    </div>
+
+    <script>
+        let med_id = "";
+        
+        function validateMedicine(productId) {
+            // checks if the medicine exists in med_db.med
+            let inputVal = document.getElementById(productId).value;
+            
+            // AJAX 요청을 통해 의약품을 검증한다
+            
+            $.ajax({
+                url: '/check_medicine/', // Django URL endpoint
+                method: 'GET',
+                data: {
+                    'product_name' : inputVal
+                },
+                success: function(data) {
+
+                    if (data.medicines && data.medicines.length > 0) {
+                        displayMedicines(data.medicines, productId);
+                    }
+                },
+                error: function(err) {
+                    console.error("Error fetchig medicines", err);
+                }
+            });
+        }
+
+        function displayMedicines(medicines, productId) {
+            let medicineListDiv = document.getElementById("medicine-list");
+            medicineListDiv.innerHTML = ""; // Clear previous list
+
+            // 테이블 헤더 생성
+            let table = document.createElement("table");
+            let header = document.createElement("tr");
+            let headers = [
+                "제품명 (product name)", 
+                "성분명 (compound name)", 
+                "성분코드 (compound code)", 
+                "제품코드 (product code)", 
+                "업체명 (company name)"
+            ];
+            headers.forEach(h => {
+                let th = document.createElement("th");
+                th.innerText = h;
+                header.appendChild(th);
+            });
+            table.appendChild(header);
+
+
+            medicines.forEach(med => {
+                let tr = document.createElement("tr");
+                let data = [
+                    med.product_name,
+                    med.compound_name,
+                    med.compound_code,
+                    med.product_code,
+                    med.company_name
+                ];
+                data.forEach(d => {
+                    let td = document.createElement("td");
+                    td.innerText = d;
+                    tr.appendChild(td);
+                });
+
+                // 클릭 이벤트 추가
+                tr.onclick = function() {
+                    if (productId === 'productA') {
+                        med_id = med.id;
+                    } 
+
+                    // 사용자의 입력 상자에 선택한 의약품 이름을 설정합니다
+                    document.getElementById(productId).value = med.product_name;
+                    
+                    // 목록을 숨깁니다
+                    medicineListDiv.style.display = "none";
+
+                    if (med_id) {
+                        document.getElementById('addMedicineBtn').classList.remove('disabled');
+                        document.getElementById('addMedicineBtn').disabled = false;
+                    }
+                };
+                table.appendChild(tr);
+            });
+            medicineListDiv.appendChild(table);
+            medicineListDiv.style.display = "block";
+        }
+
+        function addMedicine(medicine) {
+
+        }
+
+    </script>
+</body>
+</html>

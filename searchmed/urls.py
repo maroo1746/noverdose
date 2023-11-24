@@ -8,6 +8,7 @@ app_name = 'searchmed'
 urlpatterns = [
     path('', views.home_view, name='home'),
     path('combine/', views.combine_view, name='combine'),
+    path('add_med_user/', views.add_med_user_view, name='add_med_user'),
     path('age/', views.age_view, name='age'),
     path('check_medicine/', views.check_medicine, name='check_medicine'),
     path('check_contraindication/', views.check_contraindication, name='check_contraindication'),
