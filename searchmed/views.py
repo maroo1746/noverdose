@@ -5,6 +5,8 @@ from .models import Med, Medcontraindication
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 import ctypes
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 # Load the shared library
 med_db_lib = ctypes.CDLL('./libs/med_db.so')
@@ -49,6 +51,17 @@ def check_contraindication(request):
 
     return JsonResponse(data, safe=False)
 
+def signup_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # 선택적: 회원가입 후 자동 로그인
+            return redirect('searchmed:home')  # 회원가입 후 이동할 페이지
+    else:
+        form = UserCreationForm()
+
+    return render(request, 'searchmed/signup.html', {'form': form})
 
 @login_required
 def addinfo_view(request):
