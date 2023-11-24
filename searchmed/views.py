@@ -7,6 +7,8 @@ from django.db.models import Q
 import ctypes
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from django.contrib.auth.views import LoginView
+from django.urls import reverse_lazy
 
 # Load the shared library
 med_db_lib = ctypes.CDLL('./libs/med_db.so')
@@ -63,6 +65,14 @@ def signup_view(request):
 
     return render(request, 'searchmed/signup.html', {'form': form})
 
+class CustomLoginView(LoginView):
+    template_name = 'searchmed/login.html'
+
+    def get_success_url(self):
+        if self.request.user.is_superuser:
+            return reverse_lazy('searchmed:addinfo')
+        return reverse_lazy('searchmed:home')
+
 @login_required
 def addinfo_view(request):
 
@@ -86,4 +96,10 @@ def addinfo_view(request):
     else:
         return HttpResponse("Unsupported HTTP method.")
 
+def user_med_view(request):
+    # 로그인 여부 확인 (옵션)
+    if not request.user.is_authenticated:
+        return redirect('searchmed:login')
+
+    return render(request, 'searchmed/user_med.html')
 
