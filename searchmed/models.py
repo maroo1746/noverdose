@@ -1,6 +1,8 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Med(models.Model):
+    id = models.AutoField(primary_key=True)
     compound_name = models.CharField(max_length=225, blank=True, null=True)
     compound_code = models.CharField(max_length=225, blank=True, null=True)
     product_code = models.IntegerField(blank=True, null=True)
@@ -23,3 +25,7 @@ class Medcontraindication(models.Model):
     class Meta:
         managed = False
         db_table = 'medcontraindication'
+
+class UserMedication(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    med = models.ForeignKey(Med, on_delete=models.CASCADE)

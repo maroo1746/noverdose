@@ -1,4 +1,4 @@
-version: '3.8'
+version: '2.0'
 
 services:
   db:
@@ -7,8 +7,11 @@ services:
       - mysql_data:/var/lib/mysql
       - ./backup.sql:/docker-entrypoint-initdb.d/backup.sql
     environment:
-      MYSQL_DATABASE: med_db
-      MYSQL_ROOT_PASSWORD: snewi832#
+      - MYSQL_DATABASE=med_db
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      
+    env_file:
+      - .env
     ports:
       - 3307:3306
     restart: always
@@ -17,19 +20,22 @@ services:
 
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    image: mediforbidden_web:latest
+    #command: python manage.py runserver 0.0.0.0:8000
+    command: ["./wait-for-it.sh", "db:3306", "--", "python", "manage.py", "runsslserver", "0.0.0.0:8000"]
     volumes:
       - .:/app
     ports:
       - 8000:8000
     depends_on:
       - db
+    env_file:
+      - .env
     environment:
-      - SECRET_KEY=django-insecure-!q7#u-1tucuqadzf7(z6i&ql#qam$=2x(b4p6%3m2fv%j6&cvq
+      - SECRET_KEY=${SECRET_KEY}
       - DATABASE_NAME=med_db
       - DATABASE_USER=root
-      - DATABASE_PASSWORD=snewi832#
-      #- DATABASE_HOST=db
+      - DATABASE_PASSWORD=${DB_PASSWORD}
       - DATABASE_PORT=3306
       - DB_HOST=db
     networks:

@@ -51,6 +51,16 @@
         <h1> PILL SMART </h1>
         <button onclick="location.href='{% url "searchmed:combine" %}'">Contraindications for combined used </button>
         <button onclick="location.href='{% url "searchmed:age" %}'">Contraindications by age</button>
+        
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'searchmed:logout' %}"><button>Logout</button></a>
+            <button onclick="location.href='{% url "searchmed:user_med" %}'">Register Your Medication</button>
+        
+        {% else %}
+            <a href="{% url 'login' %}"><button>Login for admin and add info</button></a>
+            <a href="{% url 'login' %}"><button>Login for normal user</button></a>
+            <a href="{% url 'searchmed:signup' %}"><button>go to registeration page</button></a>
+        {% endif %}
     </div>
 </body>
 </html>
