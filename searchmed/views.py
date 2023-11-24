@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.http import HttpResponse, HttpResponseForbidden
-from .models import Med, Medcontraindication
+from .models import Med, Medcontraindication, UserMedication
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 import ctypes
@@ -105,4 +105,12 @@ def user_med_view(request):
         return redirect('searchmed:login')
 
     return render(request, 'searchmed/user_med.html')
+
+@login_required
+def add_medicine(request):
+    if request.method == 'POST':
+        med_id =request.POST.get('med_id')
+        med = Med.objects.get(id=med_id)
+        UserMedication.objects.create(user=request.user, med=med)
+        
 

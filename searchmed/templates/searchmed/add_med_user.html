@@ -115,8 +115,22 @@
             medicineListDiv.style.display = "block";
         }
 
-        function addMedicine(medicine) {
-
+        function addMedicine() {
+            var csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            $.ajax({
+                url: '/add_medicine/', 
+                type: 'POST',
+                data: {
+                    'med_id':med_id,
+                    'csrfmiddlewaretoken':csrfToken
+                },
+                success: function(response) {
+                    alert("The medication has been successfully added.");
+                },
+                error: function(error) {
+                    alert("An error occurred: " +xhr.status + " " + error);
+                }
+            })
         }
 
     </script>
