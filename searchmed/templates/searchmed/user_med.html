@@ -1,81 +1,228 @@
 <!DOCTYPE html>
+{% load static %}
+<html lang="ko">
 <html>
+
 <head>
     <title>Your Medicines</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <style>
         .container {
             display: flex;
             justify-content: space-between;
         }
+
         .med-table {
-            width: 66%; /* 테이블 크기를 페이지의 2/3로 설정 */
-            overflow-y: auto; /* 스크롤 가능하게 설정 */
-            max-height: 400px; /* 스크롤 영역의 최대 높이 */
+            width: 66%;
+            /* 테이블 크기를 페이지의 2/3로 설정 */
+            overflow-y: auto;
+            /* 스크롤 가능하게 설정 */
+            max-height: 400px;
+            /* 스크롤 영역의 최대 높이 */
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
         }
-        th, td {
+
+        th,
+        td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
         }
+
         th {
             background-color: #f2f2f2;
         }
+
         .button-group {
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             margin-bottom: 10px;
-            width: 150px;  /* 버튼의 너비 */
-            height: 50px;  /* 버튼의 높이 */
-            font-size: 100px;  /* 폰트 크기 */
-            padding: 10px; 
+            width: 150px;
+            /* 버튼의 너비 */
+            height: 50px;
+            /* 버튼의 높이 */
+            font-size: 100px;
+            /* 폰트 크기 */
+            padding: 10px;
         }
+
         .button-group button {
             margin-bottom: 10px;
         }
     </style>
 </head>
+
 <body>
 
-<h1>Your Medicines</h1>
+    <h1>Your Medicines</h1>
 
-<div class="container">
-    <div class="med-table">
-        <!-- 약품 목록 테이블 -->
-        <table>
-            <thead>
-                <tr>
-                    <th>product name</th>
-                    <th>compound name</th>
-                    <th>compound code</th>
-                    <th>product code</th>
-                    <th>company name</th>
-                    <!-- 다른 컬럼 추가 가능 -->
-                </tr>
-            </thead>
-            <tbody>
-                <!-- 서버에서 가져온 약품 데이터를 반복하여 표시 -->
-                <!-- 예시:
+    <div class="container">
+        <div class="med-table">
+            <!-- 약품 목록 테이블 -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>product name</th>
+                        <th>compound name</th>
+                        <th>compound code</th>
+                        <th>product code</th>
+                        <th>company name</th>
+                        <!-- 다른 컬럼 추가 가능 -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 서버에서 가져온 약품 데이터를 반복하여 표시 -->
+                    <!-- 예시:
                 <tr>
                     <td>Aspirin</td>
                     <td>100mg</td>
                     <td>Once a day</td>
                 </tr>
                 -->
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="button-group">
+            <!-- 버튼 추가 -->
+            <a href="{% url 'searchmed:add_med_user' %}"><button>Add Medication</button></a>
+            <button onclick="searchMed()">Search</button>
+        </div>
     </div>
 
-    <div class="button-group">
-        <!-- 버튼 추가 -->
-        <button onclick="addMed()">Add Med</button>
-        <button onclick="searchMed()">Search</button>
+    <div class="search-container">
+        <header class ="search-header">
+            Add Medications
+        </header>
+
+        <form method="POST">
+            {% csrf_token %}
+        <div class="input-group">
+            <input type="text" placeholder="Medication Name" id="productA">
+            <button class="search-btn" type="button" onclick="validateMedicine('productA')">🔍</button>
+        </div>
+        <div id="medicine-list" style="display:none;"></div>
+        <div style="text-align: right;">
+            <button class="search-btn disabled" type="button" id="addMedicineBtn" onclick="addMedicine()" disabled>Add</button>
+        </div>
+        <div id="resultsContainer"></div>
     </div>
-</div>
+
+    <script>
+        let med_id = "";
+        
+        function validateMedicine(productId) {
+            // checks if the medicine exists in med_db.med
+            let inputVal = document.getElementById(productId).value;
+            
+            // AJAX 요청을 통해 의약품을 검증한다
+            
+            $.ajax({
+                url: '/check_medicine/', // Django URL endpoint
+                method: 'GET',
+                data: {
+                    'product_name' : inputVal
+                },
+                success: function(data) {
+
+                    if (data.medicines && data.medicines.length > 0) {
+                        displayMedicines(data.medicines, productId);
+                    }
+                },
+                error: function(err) {
+                    console.error("Error fetchig medicines", err);
+                }
+            });
+        }
+
+        function displayMedicines(medicines, productId) {
+            let medicineListDiv = document.getElementById("medicine-list");
+            medicineListDiv.innerHTML = ""; // Clear previous list
+
+            // 테이블 헤더 생성
+            let table = document.createElement("table");
+            let header = document.createElement("tr");
+            let headers = [
+                "제품명 (product name)", 
+                "성분명 (compound name)", 
+                "성분코드 (compound code)", 
+                "제품코드 (product code)", 
+                "업체명 (company name)"
+            ];
+            headers.forEach(h => {
+                let th = document.createElement("th");
+                th.innerText = h;
+                header.appendChild(th);
+            });
+            table.appendChild(header);
+
+
+            medicines.forEach(med => {
+                let tr = document.createElement("tr");
+                let data = [
+                    med.product_name,
+                    med.compound_name,
+                    med.compound_code,
+                    med.product_code,
+                    med.company_name
+                ];
+                data.forEach(d => {
+                    let td = document.createElement("td");
+                    td.innerText = d;
+                    tr.appendChild(td);
+                });
+
+                // 클릭 이벤트 추가
+                tr.onclick = function() {
+                    if (productId === 'productA') {
+                        med_id = med.id;
+                    } 
+
+                    // 사용자의 입력 상자에 선택한 의약품 이름을 설정합니다
+                    document.getElementById(productId).value = med.product_name;
+                    
+                    // 목록을 숨깁니다
+                    medicineListDiv.style.display = "none";
+
+                    if (med_id) {
+                        document.getElementById('addMedicineBtn').classList.remove('disabled');
+                        document.getElementById('addMedicineBtn').disabled = false;
+                    }
+                };
+                table.appendChild(tr);
+            });
+            medicineListDiv.appendChild(table);
+            medicineListDiv.style.display = "block";
+        }
+
+        function addMedicine() {
+            var csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            $.ajax({
+                url: '/add_medicine/', 
+                type: 'POST',
+                data: {
+                    'med_id':med_id,
+                    'csrfmiddlewaretoken':csrfToken
+                },
+                success: function(response) {
+                    alert("The medication has been successfully added.");
+                },
+                error: function(error) {
+                    alert("An error occurred: " +xhr.status + " " + error);
+                }
+            })
+        }
+
+    </script>
 
 </body>
+
 </html>

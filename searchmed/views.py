@@ -26,6 +26,9 @@ def add_med_user_view(request) :
 def age_view(request) :
     return render(request, 'searchmed/age.html', {})
 
+def add_med_user(request) :
+    return render(request, 'searchmed/add_med_user.html', {})
+
 def check_medicine(request):
     product_name = request.GET.get('product_name')
     if product_name:
@@ -98,7 +101,8 @@ def addinfo_view(request):
     
     else:
         return HttpResponse("Unsupported HTTP method.")
-
+    
+@login_required
 def user_med_view(request):
     # 로그인 여부 확인 (옵션)
     if not request.user.is_authenticated:
