@@ -1,16 +1,37 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>registeration</title>
+    <title>Registration</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        h2{
+            color: #007BFF;
+            text-align: center;
+            font-size: 45px;
+        }
+    </style>
 </head>
 <body>
 
-<h2>registeration</h2>
+<h2>Registration</h2>
 
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">registeration</button>
+    <div>
+        <label for="{{ form.username.id_for_label }}">Username:</label>
+        {{ form.username }}
+    </div>
+    <div>
+        <label for="{{ form.password1.id_for_label }}">Password:</label>
+        {{ form.password1 }}
+    </div>
+    <div>
+        <label for="{{ form.password2.id_for_label }}">Confirm Password:</label>
+        {{ form.password2 }}
+    </div>
+    <button type="submit">Register</button>
 </form>
 
 </body>

@@ -23,9 +23,6 @@ def combine_view(request) :
 def add_med_user_view(request) :
     return render(request, 'searchmed/add_med_user.html', {})
 
-def age_view(request) :
-    return render(request, 'searchmed/age.html', {})
-
 def add_med_user(request) :
     return render(request, 'searchmed/add_med_user.html', {})
 
