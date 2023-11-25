@@ -316,20 +316,28 @@
                 }
             });
         }
-        let medA_id = "";
-        let medB_id = "";
         
         function updateContraindicationTable() {
             $.ajax({
-                url: '/get_user_medications/',
+                url: '/get_user_contraindications/',
                 type: 'GET',
                 success: function(data) {
-                    for (var i = 0; i < data.medications.length; i++) {
-                        data.medications[i]
-
-                    }
+                    var tableBody = document.querySelector('.combination-table tbody');
+                    tableBody.innerHTML = ''; 
+                    data.medications.forEach(function(med) {
+                        var row = tableBody.insertRow();
+                        row.insertCell(0).textContent = med.med_a;
+                        row.insertCell(1).textContent = med.med_b;
+                        row.insertCell(2).textContent = med.contraindicated_info;
+                        row.insertCell(3).textContent = med.notification_no;
+                        row.insertCell(4).textContent = med.notification_date;
+                        row.insertCell(5).textContent = med.detail_info;
+                    });
+                },
+                error: function(error) {
+                    console.error("Could not retrieve user medications: ", error);
                 }
-            })
+            });
         }
 
         function toggleTable() {
@@ -340,7 +348,7 @@
             } else {
                 table.style.display = "none"; 
             }
-}
+        }
  
     </script>
 
