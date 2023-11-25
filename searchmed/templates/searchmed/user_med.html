@@ -324,7 +324,7 @@
                 success: function(data) {
                     var tableBody = document.querySelector('.combination-table tbody');
                     tableBody.innerHTML = ''; 
-                    data.medications.forEach(function(med) {
+                    data.forEach(function(med) {
                         var row = tableBody.insertRow();
                         row.insertCell(0).textContent = med.med_a;
                         row.insertCell(1).textContent = med.med_b;

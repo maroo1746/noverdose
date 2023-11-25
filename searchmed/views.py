@@ -156,10 +156,11 @@ def get_user_contraindications(request):
     user_medications = UserMedication.objects.filter(user=request.user).select_related('med')
     med_id_list = [
         {'id': user_med.med.id,
-         'product_name': user_med.med.compound_name,
+         'product_name': user_med.med.product_name,
         }
         for user_med in user_medications
     ]
+
     data = []
     for i in range(0, len(med_id_list)) :
         if (i < len(med_id_list) -1):
