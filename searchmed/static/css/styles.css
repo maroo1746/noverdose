@@ -96,4 +96,10 @@
     #resultTable th {
         background-color: #f2f2f2;
     }
+
+    .combination-table {
+        overflow-y: auto; /* 세로 스크롤 활성화 */
+        max-height: 400px; /* 최대 높이 설정 */
+    }
+
 </style>

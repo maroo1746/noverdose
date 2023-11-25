@@ -9,6 +9,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
+import numpy as np
 
 # Load the shared library
 med_db_lib = ctypes.CDLL('./libs/med_db.so')
@@ -107,7 +108,7 @@ def user_med_view(request):
 
     return render(request, 'searchmed/user_med.html')
 
-@login_required
+
 def add_medicine(request):
     if request.method == 'POST':
         med_id =request.POST.get('med_id')
@@ -146,4 +147,37 @@ def get_user_medications(request):
         for user_med in user_medications
     ]
     return JsonResponse({'medications': medications_list})
+
+@login_required
+def get_user_contraindications(request):
+    user_medications = UserMedication.objects.filter(user=request.user).select_related('med')
+    med_id_list = [
+        {'id': user_med.med.id,
+         'product_name': user_med.med.product_name,
+        }
+        for user_med in user_medications
+    ]
+
+    data = []
+    for i in range(0, len(med_id_list)) :
+        if (i < len(med_id_list) -1):
+            for j in range (i+1, len(med_id_list)):
+                medA_id = med_id_list[i]['id']
+                medB_id = med_id_list[j]['id']
+                results = Medcontraindication.objects.filter(
+                    Q(med_id_a=medA_id, med_id_b=medB_id) | Q(med_id_a=medB_id, med_id_b=medA_id)
+                    )
+        
+                for r in results:
+                    data.append({
+                        'med_a': med_id_list[i]['product_name'],
+                        'med_b': med_id_list[j]['product_name'],
+                        'contraindicated_info': r.contraindicated_info,
+                        'notification_no': r.notification_no,
+                        'notification_date': r.notification_date.strftime('%Y-%m-%d'),
+                        'detail_info': r.detail_info
+                    })
+
+    return JsonResponse(data, safe=False)                 
+                
 
