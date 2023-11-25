@@ -106,7 +106,7 @@ def user_med_view(request):
 
     return render(request, 'searchmed/user_med.html')
 
-@login_required
+
 def add_medicine(request):
     if request.method == 'POST':
         med_id =request.POST.get('med_id')
