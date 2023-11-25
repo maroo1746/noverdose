@@ -307,6 +307,21 @@
                 }
             });
         }
+        let medA_id = "";
+        let medB_id = "";
+        
+        function updateContraindicationTable() {
+            $.ajax({
+                url: '/get_user_medications/',
+                type: 'GET',
+                success: function(data) {
+                    for (var i = 0; i < data.medications.length; i++) {
+                        data.medications[i]
+
+                    }
+                }
+            })
+        }
  
     </script>
 
