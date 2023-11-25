@@ -12,6 +12,7 @@ urlpatterns = [
     path('age/', views.age_view, name='age'),
     path('check_medicine/', views.check_medicine, name='check_medicine'),
     path('check_contraindication/', views.check_contraindication, name='check_contraindication'),
+    path('get_user_medications/', views.get_user_medications, name='get_user_medications'),
     path('addinfo/', views.addinfo_view, name='addinfo'),
     path('signup/', views.signup_view, name='signup'),
     path('logout/', auth_views.LogoutView.as_view(next_page='searchmed:home'), name='logout'),

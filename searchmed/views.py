@@ -115,6 +115,38 @@ def add_medicine(request):
     if request.method == 'POST':
         med_id =request.POST.get('med_id')
         med = Med.objects.get(id=med_id)
+
+        medication_exists = UserMedication.objects.filter(
+            user=request.user, 
+            med=med
+        ).exists()
+
+        if medication_exists:
+            return JsonResponse({
+                'status': 'error', 
+                'message': '이미 추가된 약품입니다. You have already added this medication.'
+            }, status=400)
+
         UserMedication.objects.create(user=request.user, med=med)
-        
+        return JsonResponse({'status': 'success', 'message': 'Medication added successfully.'})
+    
+    # POST 요청이 아닌 경우 오류 메시지를 담은 JsonResponse를 반환합니다.
+    return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)  
+    
+
+@login_required
+def get_user_medications(request):
+    user_medications = UserMedication.objects.filter(user=request.user).select_related('med')
+    medications_list = [
+        {
+            'product_name': user_med.med.product_name,
+            'compound_name': user_med.med.compound_name,
+            'compound_code': user_med.med.compound_code,
+            'product_code': user_med.med.product_code,
+            'company_name': user_med.med.company_name,
+            
+        }
+        for user_med in user_medications
+    ]
+    return JsonResponse({'medications': medications_list})
 

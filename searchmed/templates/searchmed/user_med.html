@@ -1,68 +1,121 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="ko">
+
 <html>
-
-<head>
-    <title>Your Medicines</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <style>
-        .container {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .med-table {
-            width: 66%;
-            /* 테이블 크기를 페이지의 2/3로 설정 */
-            overflow-y: auto;
-            /* 스크롤 가능하게 설정 */
-            max-height: 400px;
-            /* 스크롤 영역의 최대 높이 */
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        .button-group {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            margin-bottom: 10px;
-            width: 150px;
-            /* 버튼의 너비 */
-            height: 50px;
-            /* 버튼의 높이 */
-            font-size: 100px;
-            /* 폰트 크기 */
-            padding: 10px;
-        }
-
-        .button-group button {
-            margin-bottom: 10px;
-        }
-    </style>
-</head>
+    <head>
+        <title>Your Medicines</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+            }
+    
+            .header {
+                background-color: #fff;
+                padding: 20px;
+                text-align: center;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                margin-bottom: 20px;
+            }
+    
+            h1 {
+                margin: 0;
+                font-size: 24px;
+                color: #333;
+            }
+    
+            .container {
+                width: 80%;
+                margin: auto;
+                overflow: hidden;
+            }
+    
+            .med-table,
+            .search-container {
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+    
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
+    
+            th, td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+            }
+    
+            th {
+                background-color: #f2f2f2;
+            }
+    
+            .search-header {
+                font-size: 24px;
+                color: #333;
+                margin-bottom: 20px;
+            }
+    
+            .input-group {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+    
+            input[type="text"] {
+                width: 75%;
+                padding: 10px;
+                margin-right: 10px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+    
+            button.search-btn {
+                padding: 10px 20px;
+                background-color: #5cb85c;
+                border: none;
+                border-radius: 4px;
+                color: white;
+                cursor: pointer;
+            }
+    
+            button.search-btn.disabled {
+                background-color: #cccccc;
+            }
+    
+            /* Adjust this to fit your actual Add button */
+            #addMedicineBtn {
+                background-color: #0275d8;
+                color: white;
+            }
+    
+            /* Same style for all buttons */
+            button {
+                font-size: 18px;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+        </style>
+    </head>
 
 <body>
 
-    <h1>Your Medicines</h1>
+    <div class="header">
+        <h1>Your Medications</h1>
+    </div>
 
     <div class="container">
         <div class="med-table">
@@ -92,8 +145,6 @@
         </div>
 
         <div class="button-group">
-            <!-- 버튼 추가 -->
-            <a href="{% url 'searchmed:add_med_user' %}"><button>Add Medication</button></a>
             <button onclick="searchMed()">Search</button>
         </div>
     </div>
@@ -117,6 +168,10 @@
     </div>
 
     <script>
+        $(document).ready(function() {
+            updateMedicationTable(); // 페이지 로드 완료 시 함수 호출
+        });
+
         let med_id = "";
         
         function validateMedicine(productId) {
@@ -213,14 +268,46 @@
                     'csrfmiddlewaretoken':csrfToken
                 },
                 success: function(response) {
-                    alert("The medication has been successfully added.");
+                    if (response.status === 'success') {
+                        alert(response.message);
+                        updateMedicationTable();  // 테이블을 업데이트하는 함수 호출
+                    } else {
+                        alert(response.message);  // 에러 메시지를 보여줍니다.
+                    }
                 },
-                error: function(error) {
-                    alert("An error occurred: " +xhr.status + " " + error);
+                error: function(xhr, status, error) {
+                    if(xhr.status === 400) {
+                        var errorMsg = JSON.parse(xhr.responseText).message; // JSON 응답에서 메시지 추출
+                        alert(errorMsg); // 서버에서 전송된 구체적인 에러 메시지를 표시
+                    } else {
+                        alert("An error occurred: " + xhr.status);
+                    }
                 }
-            })
+            });
         }
 
+        function updateMedicationTable() {
+            $.ajax({
+                url: '/get_user_medications/',
+                type: 'GET',
+                success: function(data) {
+                    var tableBody = document.querySelector('.med-table tbody');
+                    tableBody.innerHTML = ''; 
+                    data.medications.forEach(function(med) {
+                        var row = tableBody.insertRow();
+                        row.insertCell(0).textContent = med.product_name;
+                        row.insertCell(1).textContent = med.compound_name;
+                        row.insertCell(2).textContent = med.compound_code;
+                        row.insertCell(3).textContent = med.product_code;
+                        row.insertCell(4).textContent = med.company_name;
+                    });
+                },
+                error: function(error) {
+                    console.error("Could not retrieve user medications: ", error);
+                }
+            });
+        }
+ 
     </script>
 
 </body>
