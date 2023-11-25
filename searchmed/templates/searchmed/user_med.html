@@ -119,7 +119,6 @@
 
     <div class="container">
         <div class="med-table">
-            <!-- 약품 목록 테이블 -->
             <table>
                 <thead>
                     <tr>
@@ -128,24 +127,34 @@
                         <th>compound code</th>
                         <th>product code</th>
                         <th>company name</th>
-                        <!-- 다른 컬럼 추가 가능 -->
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- 서버에서 가져온 약품 데이터를 반복하여 표시 -->
-                    <!-- 예시:
-                <tr>
-                    <td>Aspirin</td>
-                    <td>100mg</td>
-                    <td>Once a day</td>
-                </tr>
-                -->
+                
                 </tbody>
             </table>
         </div>
 
         <div class="button-group">
-            <button onclick="searchMed()">Search Contraindications</button>
+            <button onclick="toggleTable()">Search</button>
+        </div>
+
+        <div class="combination-table" style="display: none;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>의약품 이름 (Med A)</th>
+                        <th>의약품 이름 (Med B)</th>
+                        <th>상세정보 (Contraindicated Info)</th>
+                        <th>고시번호 (Notification No)</th>
+                        <th>고시일자 (Notification Date)</th>
+                        <th>비고 (Detail Info)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 서버에서 가져온 데이터로 채워질 부분 -->
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -322,6 +331,16 @@
                 }
             })
         }
+
+        function toggleTable() {
+            var table = document.querySelector('.combination-table');
+            if (table.style.display === "none" || table.style.display === "") {
+                table.style.display = "block"; 
+                updateContraindicationTable(); 
+            } else {
+                table.style.display = "none"; 
+            }
+}
  
     </script>
 
