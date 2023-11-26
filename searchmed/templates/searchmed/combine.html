@@ -7,6 +7,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>병용금지 의약품 조회</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        .search-container {
+        background-color: #fff;
+        padding: 30px;
+        padding-bottom: 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 1200px;  /* 최대 너비 설정 */
+        box-sizing: border-box;
+        margin: auto;
+    }
+    </style>
 </head>
 <body>
     
@@ -150,7 +163,7 @@
 
                         document.getElementById('resultsContainer').innerHTML = tableHTML; 
                     } else {
-                        document.getElementById('resultsContainer').innerHTML = '병용금지 약품 조합이 아닙니다. (This is not a combination for contraindicated medicines)';
+                        document.getElementById('resultsContainer').innerHTML = '병용금지 약품 조합이 아닙니다. (This is not a combination for contraindicated medications.)';
                     }
                 },
                 error: function(err) {
