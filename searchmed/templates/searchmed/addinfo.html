@@ -3,31 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Info</title>
+    <title>정보 추가 Add Info</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            color: white;
+        }
+
+        h2 {
+            color: #007BFF;
+            text-align: center;
+            font-size: 45px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            font-size: 16px;
+        }
+    
+        .form-container {
+            background-color: #007BFF;
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 180px;
+            margin: 10px auto;
+        }
+
+        button[type="submit"] {
+            font-size: 14px;
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 10%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    </style>
 </head>
 <body>
+    <h2>Add Product Information</h2>
 
-<h2>Add Product Information</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-container">
+            <label for="product_name">Product Name:</label><br>
+            <input type="text" id="product_name" name="product_name" required><br><br>
 
-<form method="POST">
-    {% csrf_token %}
-    <label for="product_name">Product Name:</label><br>
-    <input type="text" id="product_name" name="product_name" required><br><br>
+            <label for="compound_name">Compound Name:</label><br>
+            <input type="text" id="compound_name" name="compound_name" required><br><br>
 
-    <label for="compound_name">Compound Name:</label><br>
-    <input type="text" id="compound_name" name="compound_name" required><br><br>
+            <label for="compound_code">Compound Code:</label><br>
+            <input type="text" id="compound_code" name="compound_code" required><br><br>
 
-    <label for="compound_code">Compound Code:</label><br>
-    <input type="text" id="compound_code" name="compound_code" required><br><br>
+            <label for="product_code">Product Code:</label><br>
+            <input type="text" id="product_code" name="product_code" required><br><br>
 
-    <label for="product_code">Product Code:</label><br>
-    <input type="text" id="product_code" name="product_code" required><br><br>
+            <label for="company_name">Company Name:</label><br>
+            <input type="text" id="company_name" name="company_name" required><br><br>
 
-    <label for="company_name">Company Name:</label><br>
-    <input type="text" id="company_name" name="company_name" required><br><br>
-
-    <input type="submit" value="Submit">
-</form>
-
+            <input type="submit" value="Submit">
+        </div>
+    </form>
 </body>
 </html>
