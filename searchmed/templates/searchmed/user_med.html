@@ -124,11 +124,11 @@
             <table>
                 <thead>
                     <tr>
-                        <th>product name</th>
-                        <th>compound name</th>
-                        <th>compound code</th>
-                        <th>product code</th>
-                        <th>company name</th>
+                        <th>제품명 (product name)</th>
+                        <th>성분명 (compound name)</th>
+                        <th>성분코드 (compound code)</th>
+                        <th>제품코드 (product code)</th>
+                        <th>업체명 (company name)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -138,7 +138,7 @@
         </div>
 
         <div class="button-group">
-            <button onclick="toggleTable()">Search</button>
+            <button onclick="toggleTable()">병용금기 검색 Search for Contraindication</button>
         </div>
 
         <div class="combination-table" style="display: none;">
@@ -162,18 +162,18 @@
 
     <div class="search-container">
         <header class ="search-header">
-            Add Medications
+            의약품 추가 Add Medications
         </header>
 
         <form method="POST">
             {% csrf_token %}
         <div class="input-group">
-            <input type="text" placeholder="Medication Name" id="productA">
+            <input type="text" placeholder="의약품 이름 Medication Name" id="productA">
             <button class="search-btn" type="button" onclick="validateMedicine('productA')">🔍</button>
         </div>
         <div id="medicine-list" style="display:none;"></div>
         <div style="text-align: right;">
-            <button class="search-btn disabled" type="button" id="addMedicineBtn" onclick="addMedicine()" disabled>Add</button>
+            <button class="search-btn disabled" type="button" id="addMedicineBtn" onclick="addMedicine()" disabled>추가 Add</button>
         </div>
         <div id="resultsContainer"></div>
     </div>
