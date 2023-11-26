@@ -3,36 +3,132 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Registration</title>
+    <title>등록 화면 Registration Page</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <style>
-        h2{
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            color: white;
+        }
+    
+        h2 {
             color: #007BFF;
             text-align: center;
             font-size: 45px;
         }
+        
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .help-button {
+            margin-left: 10px;
+            cursor: pointer;
+            border: 2px solid white;
+            border-radius: 50%;
+            background-color: transparent;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            color: white;
+        }
+
+        .input-group {
+            margin-bottom: 10px; 
+        }
+
+        .field-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .tooltip-text {
+            font-size: 10px;
+            visibility: hidden;
+            width: 320px;
+            background-color: rgb(255, 255, 255);
+            color: #000000;
+            text-align: left;
+            border-radius: 6px;
+            position: absolute;
+            left: 70%;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        
+        .tooltip-container .help-button:hover + .tooltip-text, .help-button:hover + .tooltip-text {
+            visibility: visible;
+            opacity: 0.85;
+        }
+    
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            font-size: 16px;
+        }
+    
+        .form-container {
+            background-color: #007BFF;
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px;
+            margin: 10px auto;
+        }
+    
+        button[type="submit"] {
+            font-size: 14px;
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 10%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 <body>
+    <h2>Registration</h2>
 
-<h2>Registration</h2>
-
-<form method="post">
-    {% csrf_token %}
-    <div>
-        <label for="{{ form.username.id_for_label }}">Username:</label>
-        {{ form.username }}
-    </div>
-    <div>
-        <label for="{{ form.password1.id_for_label }}">Password:</label>
-        {{ form.password1 }}
-    </div>
-    <div>
-        <label for="{{ form.password2.id_for_label }}">Confirm Password:</label>
-        {{ form.password2 }}
-    </div>
-    <button type="submit">Register</button>
-</form>
-
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-container">
+            <div class="input-group">
+                <label for="{{ form.username.id_for_label }}">사용자명 Username: </label>
+                <div class="field-container">
+                    {{ form.username }}
+                    <button type="button" class="help-button">?</button>
+                    <span class="tooltip-text">{{ form.username.help_text }}</span>
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="{{ form.password1.id_for_label }}">비밀번호 Password: </label>
+                <div class="field-container">
+                    {{ form.password1 }}
+                    <button type="button" class="help-button">?</button>
+                    <span class="tooltip-text">{{ form.password1.help_text }}</span>
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="{{ form.password2.id_for_label }}">비밀번호 확인하기 Confirm Password: </label>
+                {{ form.password2 }}
+            </div>
+            <button type="submit">등록하기 Register</button>
+        </div>
+    </form>
 </body>
+
 </html>

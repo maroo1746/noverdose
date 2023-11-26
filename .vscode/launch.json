@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/bibej/Desktop/IV_HW1",
-      "program": "c:/Users/bibej/Desktop/IV_HW1/build/Debug/outDebug",
+      "cwd": "c:/Users/bibej/Desktop/Noverdose/Git/libs",
+      "program": "c:/Users/bibej/Desktop/Noverdose/Git/libs/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
