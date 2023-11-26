@@ -49,7 +49,7 @@
         <button onclick="location.href='{% url "searchmed:combine" %}'">병용금기 의약품 Contraindications for Combined Usage</button>
         
         {% if request.user.is_authenticated %}
-            <button onclick="location.href='{% url "searchmed:user_med" %}'">의약품 등록 Register Your Medication</button>
+            <button onclick="location.href='{% url "searchmed:user_med" %}'">의약품 등록 Register Your Medications</button>
             <a href="{% url 'searchmed:logout' %}"><button>로그아웃 Logout</button></a>
         
         {% else %}
