@@ -1,12 +1,9 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>홈 화면 Home Page</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -45,7 +42,7 @@
 </head>
 <body>
     <div class="button-group">
-        <h1> PILL SMART </h1>
+        <h1>NOVERDOSE</h1>
         <button onclick="location.href='{% url "searchmed:combine" %}'">병용금기 의약품 Contraindications for Combined Usage</button>
         
         {% if request.user.is_authenticated %}
