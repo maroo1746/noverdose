@@ -31,12 +31,12 @@
         <form method="POST">
             {% csrf_token %}
         <div class="input-group">
-            <input type="text" placeholder="첫 번째 약의 이름을 입력함 type the 1st medication name" id="productA">
+            <input type="text" placeholder="첫 번째 약의 이름을 입력하세요 type the 1st medication name" id="productA" autocomplete="off">
             <button class="search-btn" type="button" onclick="validateMedicine('productA')">🔍</button>
         </div>
         <div id="medicine-list" style="display:none;"></div>
         <div class="input-group">
-            <input type="text" placeholder="두 번째 약의 이름을 입력함 type the 2nd medication name" id="productB">
+            <input type="text" placeholder="두 번째 약의 이름을 입력하세요 type the 2nd medication name" id="productB" autocomplete="off">
             <button class="search-btn" type="button" onclick="validateMedicine('productB')">🔍</button>
         </div>
         <div style="text-align: right;">

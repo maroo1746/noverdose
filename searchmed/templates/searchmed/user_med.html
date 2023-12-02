@@ -168,7 +168,7 @@
         <form method="POST">
             {% csrf_token %}
         <div class="input-group">
-            <input type="text" placeholder="의약품 이름 Medication Name" id="productA">
+            <input type="text" placeholder="의약품 이름 Medication Name" id="productA" autocomplete="off">
             <button class="search-btn" type="button" onclick="validateMedicine('productA')">🔍</button>
         </div>
         <div id="medicine-list" style="display:none;"></div>
