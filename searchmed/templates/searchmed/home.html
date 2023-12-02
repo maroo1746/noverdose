@@ -1,6 +1,5 @@
-{% load static %}
-
 <!DOCTYPE html>
+{% load static %}
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -8,18 +7,10 @@
     <title>홈 화면 Home Page</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-        }
-        h1{
+        p1{
             color: #007BFF;
             text-align: center;
-            font-size: 45px;
+            font-size: 1.5em;
         }
         .button-group {
             display: flex;
@@ -45,13 +36,17 @@
 </head>
 <body>
     <div class="button-group">
-        <h1> PILL SMART </h1>
-        <button onclick="location.href='{% url "searchmed:combine" %}'">병용금기 의약품 Contraindications for Combined Usage</button>
+        <h1>NOVERDOSE</h1>
+        {% if request.user.is_authenticated %}
+            <p1>Welcome, {{request.user.get_username}}!</p1>
+        {% endif %}
+        <a href="{% url 'searchmed:combine' %}"><button>병용금기 의약품 Contraindications for Combined Usage</button>
         
         {% if request.user.is_authenticated %}
-            <button onclick="location.href='{% url "searchmed:user_med" %}'">의약품 등록 Register Your Medications</button>
+            {% if not request.user.is_superuser %}
+                <a href="{% url 'searchmed:user_med' %}"><button>의약품 등록 Register Your Medications</button>
+            {% endif %}
             <a href="{% url 'searchmed:logout' %}"><button>로그아웃 Logout</button></a>
-        
         {% else %}
             <a href="{% url 'login' %}"><button>관리자 로그인 및 정보 추가 Admin Login and Adding Info</button></a>
             <a href="{% url 'login' %}"><button>일반 사용자 로그인 Normal User Login</button></a>

@@ -1,28 +1,10 @@
-{% load static %}
-
 <!DOCTYPE html>
+{% load static %}
 <html>
 <head>
     <title>등록 화면 Registration Page</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-            color: white;
-        }
-    
-        h2 {
-            color: #007BFF;
-            text-align: center;
-            font-size: 45px;
-        }
-        
         .tooltip-container {
             position: relative;
             display: inline-block;
@@ -78,24 +60,6 @@
             margin: 0 auto;
             font-size: 16px;
         }
-    
-        .form-container {
-            background-color: #007BFF;
-            padding: 50px;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 450px;
-            margin: 10px auto;
-        }
-    
-        button[type="submit"] {
-            font-size: 14px;
-            margin-top: 20px;
-            background-color: white;
-            border-radius: 10%;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
 
         .errorlist {
             margin-top: 10px;
@@ -106,7 +70,7 @@
     </style>
 </head>
 <body>
-    <h2>Registration</h2>
+    <h1>Registration</h1>
 
     <form method="post">
         {% csrf_token %}
