@@ -33,7 +33,7 @@
     
         .form-container {
             background-color: #007BFF;
-            padding: 50px;
+            padding: 70px;
             border-radius: 10px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             width: 100%;
@@ -56,22 +56,22 @@
     <form method="POST">
         {% csrf_token %}
         <div class="form-container">
-            <label for="product_name">Product Name:</label><br>
+            <label for="product_name">제품명 Product Name:</label><br>
             <input type="text" id="product_name" name="product_name" required><br><br>
 
-            <label for="compound_name">Compound Name:</label><br>
+            <label for="compound_name">성분명 Compound Name:</label><br>
             <input type="text" id="compound_name" name="compound_name" required><br><br>
 
-            <label for="compound_code">Compound Code:</label><br>
+            <label for="compound_code">성분코드 Compound Code:</label><br>
             <input type="text" id="compound_code" name="compound_code" required><br><br>
 
-            <label for="product_code">Product Code:</label><br>
+            <label for="product_code">제품코드 Product Code:</label><br>
             <input type="text" id="product_code" name="product_code" required><br><br>
 
-            <label for="company_name">Company Name:</label><br>
+            <label for="company_name">업체명 Company Name:</label><br>
             <input type="text" id="company_name" name="company_name" required><br><br>
 
-            <input type="submit" value="Submit">
+            <input type="submit" value="추가 Add">
         </div>
     </form>
 </body>
