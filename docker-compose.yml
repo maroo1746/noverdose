@@ -9,9 +9,6 @@ services:
     environment:
       - MYSQL_DATABASE=med_db
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
-      
-    env_file:
-      - .env
     ports:
       - 3307:3306
     restart: always
@@ -29,8 +26,6 @@ services:
       - 8000:8000
     depends_on:
       - db
-    env_file:
-      - .env
     environment:
       - SECRET_KEY=${SECRET_KEY}
       - DATABASE_NAME=med_db
