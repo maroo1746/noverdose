@@ -1,0 +1,19 @@
+name: CI Workflow
+
+on: [push]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up environment variables
+      run: |
+        echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
+        echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
+
+    - name: Run Docker Compose
+      run: |
+        docker-compose up
