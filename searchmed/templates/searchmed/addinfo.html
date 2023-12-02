@@ -1,27 +1,12 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>정보 추가 Add Info</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-            color: white;
-        }
-
-        h2 {
-            color: #007BFF;
-            text-align: center;
-            font-size: 45px;
-        }
-
         form {
             display: flex;
             flex-direction: column;
@@ -29,16 +14,6 @@
             justify-content: center;
             margin: 0 auto;
             font-size: 16px;
-        }
-    
-        .form-container {
-            background-color: #007BFF;
-            padding: 70px;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 180px;
-            margin: 10px auto;
         }
 
         button[type="submit"] {
@@ -51,7 +26,7 @@
     </style>
 </head>
 <body>
-    <h2>Add Product Information</h2>
+    <h1>Add Product Information</h1>
 
     <form method="POST">
         {% csrf_token %}

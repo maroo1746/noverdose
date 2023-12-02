@@ -8,6 +8,36 @@
         background-color: #f4f4f4;
     }
 
+    h1 {
+        color: #007BFF;
+        text-align: center;
+        font-size: 45px;
+    }
+
+    .form-container {
+        color: #f4f4f4;
+        background-color: #007BFF;
+        padding: 50px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 290px; /* Adjust if different sizes are needed on different pages */
+        margin: 10px auto;
+    }
+
+    button {
+        font-size: 14px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        background-color: white;
+        border-radius: 10%;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    
+    button:hover {
+        background-color: #0056b3;
+    }
+
     .search-header{
         color: #007BFF;
         font-size: 23px;
@@ -30,7 +60,6 @@
     .input-group {
         display: flex !important;
         align-items: center !important;
-        margin-bottom: 15px !important;
         width: 100% !important;        
     }
         
