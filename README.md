@@ -51,13 +51,22 @@ Before building the project with Docker, create an empty folder and clone the re
 git clone https://github.com/maroo1746/noverdose.git
 ```
 
-### 2. Grant the wait-for-it.sh file
+### 2. Setup the Environment Variables in .env
+To avoid hardcoding any secret information (DB_PASSWORD, and SECRET_KEY) used in our project, the supposed contents of the .env file have been PGP-encrypted with TEAMTA's public key. The current .env in the root directory should be empty.
+
+The encrypted text is stored in env.txt.encrypted. Decrypt env.txt.encrypted with the following command:
+```
+gpg -o env.txt.encrypted.decrypted -d env.txt.encrypted
+```
+Copy the decrypted file, env.txt.encrypted.decrypted's contents into .env and the environment variables are all set.
+
+### 3. Grant the wait-for-it.sh file
 Follow the command inside the directory "noverdose" where manage.py file exists.
 ```
 chmod +x wait-for-it.sh
 ```
 
-### 3. Pull Docker Images
+### 4. Pull Docker Images
 Navigate to the noverdose folder within the cloned directory and pull the two required Docker images:
 
 *Web Image*
@@ -69,13 +78,13 @@ docker pull seoyeong4700/mediforbidden_web:latest
 docker pull seoyeong4700/mysql:8.0
 ```
 
-### 4. Docker Compose
+### 5. Docker Compose
 Execute the following command in the directory containing the Dockerfile and docker-compose.yml :
 ```
 docker-compose up
 ```
 
-### 5. Go into the Container & Create a superuser
+### 6. Go into the Container & Create a superuser
 When you perform docker-compose up, two images will run creating two containers that are linked. Leave the two containers running and open a new command line to enter the bash shell inside the container. We have two containers - 'web container and db container. 
 
 Follow the command to enter the bash shell of the web container. (Check the name of the web container before running it using the command ‘docker ps’. The name of the container of the image named 'mediforbidden-web' with the image tag 'latest' is the name of the web container.)
@@ -96,16 +105,16 @@ After completing all the steps, press CTRL + C to stop the containers and then u
 docker-compose down
 ```
 
-### 6. Execute 'docker-compose up' again
+### 7. Execute 'docker-compose up' again
 Afterwards, if you run docker-compose up, you can view our webpage by going to http://127.0.0.1:8000 or http://localhost:8000
 
 If you encounter additional errors, refer to 7. Appendix to check if that covers your case.
 
 
-## 7. Appendix : additional errors
+## 8. Appendix : additional errors
 
 
-### 7-1. mysql-client not available
+### 8-1. mysql-client not available
 If you face error message like :
 `````
 7.910 Package libmysqlclient-dev is not available, but is referred to by another package.
@@ -151,7 +160,7 @@ Please follow the additional steps :
    ```
 and then try to run the new container by "docker-compose down" and "docker-compose up"
 
-### 7-2. wait-for-it.sh
+### 8-2. wait-for-it.sh
 If the Docker log shows that there is no permission for wait-for-it.sh like :
 
 ```
