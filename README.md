@@ -33,7 +33,7 @@ docker exec -it [db container's ID or name] /bin/bash
 mysql -u root -p
 ```
 
-our mysql passwd is : snewi832#
+our mysql passwd is written in the env.txt.encrypted file
 
 ```
 USE med_db;
